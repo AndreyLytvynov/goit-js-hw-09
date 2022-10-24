@@ -16,3 +16,22 @@ img {
   display: block;
   max-width: 100%;
 }
+input .timer {
+  width: 200px;
+  height: 20px;
+  /* outline: 1px red solid; */
+}
+.timerok {
+  margin-left: 30px;
+  display: inline-flex;
+  flex-direction: row;
+  /* justify-content: center; */
+}
+
+.field {
+  margin-right: 20px;
+}
+
+button.nx-block-temporary-position {
+  min-height: 20px !important;
+}
