@@ -1,7 +1,6 @@
 // Описан в документации
 import flatpickr from 'flatpickr';
 import Notiflix from 'notiflix';
-// Дополнительный импорт стилей
 import 'flatpickr/dist/flatpickr.min.css';
 
 const timerEl = document.querySelector('.timer');
@@ -13,14 +12,25 @@ let SetIntervalValue = false;
 let countdownStartTime = 0;
 
 function blockedBtn() {
-  Notiflix.Block.standard('button', '', {
-    width: '100px',
-    height: '100px',
-    backgroundColor: '#f8f8f8',
-    cssAnimationDuration: 1881,
+  Notiflix.Block.arrows('button', 'Please select a date', {
+    querySelectorLimit: 200,
+    className: 'notiflix-block',
+    position: 'absolute',
+    zindex: 1000,
+    backgroundColor: 'white',
+    rtl: false,
+    fontFamily: 'Quicksand',
+    cssAnimation: true,
+    cssAnimationDuration: 10,
     svgSize: '20px',
+    svgColor: 'rgb(146, 146, 44)',
+    messageID: 'NotiflixLoadingMessage',
+    messageFontSize: '15px',
+    messageMaxLength: 34,
+    messageColor: '#dcdcdc',
   });
 }
+
 blockedBtn();
 
 const options = {
@@ -30,21 +40,16 @@ const options = {
   minuteIncrement: 1,
   onClose: [
     function () {
-      //   console.log('Закрыл модалку');
       clearInterval(timeoutId);
       SetIntervalValue = false;
     },
     function (selectedDates) {
       if (selectedDates[0].getTime() < new Date().getTime()) {
         // window.alert('Please choose a date in the future');
-        Notiflix.Notify.warning('Please choose a date in the future');
-        // Notiflix.Block.standard('button', '', {
-        //   width: '100px',
-        //   height: '100px',
-        //   backgroundColor: '#f8f8f8',
-        //   cssAnimationDuration: 1881,
-        //   svgSize: '20px',
-        // });
+        Notiflix.Notify.warning('Please choose a date in the future', {
+          timeout: 3000,
+          position: 'center-center',
+        });
         blockedBtn();
 
         return;
@@ -67,14 +72,20 @@ function convertMs(ms) {
   const day = hour * 24;
 
   // Remaining days
-  const days = Math.floor(ms / day);
+  const days = addLeadingZero(Math.floor(ms / day));
   // Remaining hours
-  const hours = Math.floor((ms % day) / hour);
+  const hours = addLeadingZero(Math.floor((ms % day) / hour));
   // Remaining minutes
-  const minutes = Math.floor(((ms % day) % hour) / minute);
+  const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
   // Remaining seconds
-  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+  const seconds = addLeadingZero(
+    Math.floor((((ms % day) % hour) % minute) / second)
+  );
   return { days, hours, minutes, seconds };
+}
+
+function addLeadingZero(numb) {
+  return numb.toString().padStart(2, '00');
 }
 
 function changeMarkupTimer({ days, hours, minutes, seconds }) {

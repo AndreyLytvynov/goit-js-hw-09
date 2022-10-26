@@ -35,3 +35,18 @@ input .timer {
 button.nx-block-temporary-position {
   min-height: 20px !important;
 }
+
+.notiflix-block-message {
+  display: block;
+  color: rgba(78, 83, 80, 0.5) !important;
+  top: -25px;
+  right: 200px;
+  width: 1000px !important;
+  display: flex !important;
+}
+.notiflix-block-icon {
+  margin-left: 10px !important;
+  color: #d84545;
+}
+
+
