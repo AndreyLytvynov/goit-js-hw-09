@@ -17,11 +17,16 @@ refs.startBtn.addEventListener('click', changeBgcBody);
 refs.stopBtn.addEventListener('click', stopChangeBgc);
 
 function changeBgcBody(e) {
+  renderingBgcBody();
   setIntervalId = setInterval(() => {
-    refs.bodyEl.style.backgroundColor = getRandomHexColor();
+    renderingBgcBody();
   }, NOTIFICATION_CHANGE);
   e.target.setAttribute('disabled', true);
   e.target.nextElementSibling.removeAttribute('disabled');
+}
+
+function renderingBgcBody() {
+  refs.bodyEl.style.backgroundColor = getRandomHexColor();
 }
 
 function stopChangeBgc(e) {

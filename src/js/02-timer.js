@@ -12,7 +12,7 @@ let SetIntervalValue = false;
 let countdownStartTime = 0;
 
 function blockedBtn() {
-  Notiflix.Block.arrows('button', 'Please select a date', {
+  Notiflix.Block.arrows('button', {
     querySelectorLimit: 200,
     className: 'notiflix-block',
     position: 'absolute',
@@ -117,16 +117,19 @@ function onBtnClick() {
   if (SetIntervalValue) {
     return;
   }
-  timeoutId = setInterval(() => {
-    SetIntervalValue = true;
-    let changeTime = countdownStartTime - Date.now();
-    if (changeTime <= 0) {
-      clearInterval(changeTime);
-      SetIntervalValue = false;
-      return;
-    }
-    // console.log(changeTime);
-    const objTime = convertMs(changeTime);
-    changeMarkupTimer(objTime);
-  }, 1000);
+  renderingOfMarkup();
+  timeoutId = setInterval(renderingOfMarkup, 1000);
+  blockedBtn();
+}
+
+function renderingOfMarkup() {
+  SetIntervalValue = true;
+  let changeTime = countdownStartTime - Date.now();
+  if (changeTime <= 0) {
+    clearInterval(changeTime);
+    SetIntervalValue = false;
+    return;
+  }
+  const objTime = convertMs(changeTime);
+  changeMarkupTimer(objTime);
 }

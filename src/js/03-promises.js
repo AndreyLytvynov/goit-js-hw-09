@@ -7,9 +7,8 @@ const amountEL = document.querySelector('[name="amount"]');
 
 formEL.addEventListener('submit', e => {
   e.preventDefault();
-
-  for (let i = 0; i < amountEL.value; i += 1) {
-    let delayStep = Number(firstDelayEL.value) + Number(delayStepEL.value) * i;
+  let delayStep = Number(firstDelayEL.value);
+  for (let i = 1; i <= Number(amountEL.value); i += 1) {
     createPromise(i, delayStep)
       .then(({ position, delay }) => {
         Notiflix.Notify.success(
@@ -21,6 +20,7 @@ formEL.addEventListener('submit', e => {
           `❌ Rejected promise ${position} in ${delay}ms`
         );
       });
+    delayStep += Number(delayStepEL.value);
   }
 });
 
@@ -39,7 +39,7 @@ function createPromise(position, delay) {
 
 Notiflix.Notify.init({
   width: '280px',
-  position: 'center-center', // 'right-top' - 'right-bottom' - 'left-top' - 'left-bottom' - 'center-top' - 'center-bottom' - 'center-center'
+  position: 'center-center',
   success: {
     background: '#32c682',
     textColor: '#fff',
