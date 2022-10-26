@@ -3,7 +3,7 @@ const refs = {
   stopBtn: document.querySelector('[data-stop]'),
   bodyEl: document.body,
 };
-NOTIFICATION_CHANGE = 1000;
+const NOTIFICATION_CHANGE = 1000;
 
 refs.stopBtn.setAttribute('disabled', true);
 
